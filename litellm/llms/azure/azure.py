@@ -441,15 +441,6 @@ class AzureChatCompletion(BaseAzureLLM, BaseLLM):
                 original_response=str(e),
             )
             raise e
-        except asyncio.CancelledError as e:
-            ## LOGGING
-            logging_obj.post_call(
-                input=data["messages"],
-                api_key=api_key,
-                additional_args={"complete_input_dict": data},
-                original_response=str(e),
-            )
-            raise AzureOpenAIError(status_code=500, message=str(e))
         except Exception as e:
             message = getattr(e, "message", str(e))
             body = getattr(e, "body", None)
